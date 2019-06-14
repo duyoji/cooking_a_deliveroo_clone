@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   db:
-    image: mariadb:10.4.5
+    image: mysql:5.7
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -13,6 +13,7 @@ services:
       - '3306:3306'
     volumes:
       - ./db/mysql_data:/var/lib/mysql
+      - ./mycustom.cnf:/etc/mysql/conf.d/custom.cnf
 
 # volumes:
 #   db_data: {}
