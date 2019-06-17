@@ -1,17 +1,13 @@
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
-// import gql from "graphql-tag";
 import Link from "next/link";
-// import { graphql } from "react-apollo";
+
 import {
-  Button,
   Card,
   CardBody,
-  CardColumns,
   CardImg,
-  CardSubtitle
 } from "reactstrap";
-import { CardText, CardTitle, Col, Row } from "reactstrap";
+import { CardText, CardTitle } from "reactstrap";
 
 const GET_RESTAURANT_LIST = gql`
   {
