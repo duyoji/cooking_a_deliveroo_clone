@@ -16,13 +16,22 @@ class MyApp extends App {
   }
 
   render() {
-    const { Component, pageProps, apolloClient, isAuthenticated, ctx } = this.props;
+    const {
+      Component,
+      pageProps,
+      apolloClient,
+      router,
+      isAuthenticated,
+      ctx
+    } = this.props;
+
+    // console.log(this.props, '@@@@@@@@@pageProps in _app.js');
 
     return (
       <Container>
         <Layout>
           <ApolloProvider client={apolloClient}>
-            <Component {...pageProps} />
+            <Component {...pageProps} router={router} />
           </ApolloProvider>
         </Layout>
 
