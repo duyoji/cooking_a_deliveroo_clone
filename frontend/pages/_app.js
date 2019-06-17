@@ -1,8 +1,12 @@
 import React from "react";
 import App, { Container } from "next/app";
 import Head from "next/head";
+import { ApolloProvider } from 'react-apollo';
 
-export default class MyApp extends App {
+// import withData from "../lib/apollo";
+import withApolloClient from '../lib/with-apollo-client';
+
+class MyApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
     let pageProps = {};
 
@@ -13,22 +17,18 @@ export default class MyApp extends App {
   }
 
   render() {
-    const { Component, pageProps } = this.props;
+    // const { Component, pageProps } = this.props;
+    const { Component, pageProps, apolloClient } = this.props
     return (
       <>
-        <Head>
-          <link
-            rel="stylesheet"
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-            crossOrigin="anonymous"
-          />
-        </Head>
-
         <Container>
-          <Component {...pageProps} />
+          <ApolloProvider client={apolloClient}>
+            <Component {...pageProps} />
+          </ApolloProvider>
         </Container>
       </>
     );
   }
 }
+
+export default withApolloClient(MyApp);
