@@ -7,29 +7,35 @@ import Layout from "../components/Layout";
 
 class MyApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
-    let pageProps = {};
+    const pagePropsTask = Component.getInitialProps
+      ? Component.getInitialProps(ctx)
+      : {};
+    const layoutPropsTask = Layout.getInitialProps
+      ? Layout.getInitialProps(ctx)
+      : {};
 
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
-    }
-    return { pageProps };
+    const [pageProps, layoutProps] = await Promise.all([
+      pagePropsTask,
+      layoutPropsTask
+    ]);
+
+    return { pageProps, layoutProps };
   }
 
   render() {
     const {
       Component,
       pageProps,
+      layoutProps,
       apolloClient,
       router,
       isAuthenticated,
       ctx
     } = this.props;
 
-    // console.log(this.props, '@@@@@@@@@pageProps in _app.js');
-
     return (
       <Container>
-        <Layout>
+        <Layout {...layoutProps}>
           <ApolloProvider client={apolloClient}>
             <Component {...pageProps} router={router} />
           </ApolloProvider>

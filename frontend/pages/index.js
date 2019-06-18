@@ -12,6 +12,7 @@ import {
 
 class Index extends React.Component {
   static displayName = 'pages/index';
+
   constructor(props) {
     super(props);
     this.state = {
