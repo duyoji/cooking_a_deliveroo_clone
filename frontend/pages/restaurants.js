@@ -43,7 +43,7 @@ const Restaurants = (props) => {
         if (loading) return 'Loading...';
         if (error) return `Error! ${error.message}`;
         const restaurant = data.restaurant;
-        console.log(data, '@@@@@@@@@@data');
+        // console.log(data, '@@@@@@@@@@data');
         if ( !restaurant ) return (<h1>Not Found</h1>);
 
         return (
