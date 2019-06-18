@@ -18,7 +18,6 @@ export const strapiRegister = (username, email, password) => {
   return strapi.register(username, email, password).then(res => {
     setToken(res);
   });
-  // return Promise.resolve();
 };
 //use strapi to get a JWT and token object, save
 //to approriate cookei for future requests
@@ -27,10 +26,9 @@ export const strapiLogin = (email, password) => {
     return;
   }
   // Get a token
-  strapi.login(email, password).then(res => {
+  return strapi.login(email, password).then(res => {
     setToken(res);
   });
-  return Promise.resolve();
 };
 
 export const setToken = token => {
