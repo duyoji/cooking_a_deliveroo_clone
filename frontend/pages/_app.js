@@ -4,6 +4,7 @@ import { ApolloProvider } from 'react-apollo';
 
 import withApolloClient from '../lib/with-apollo-client';
 import Layout from "../components/Layout";
+import AppProvider from "../components/Context/AppProvider";
 
 class MyApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
@@ -37,7 +38,9 @@ class MyApp extends App {
       <Container>
         <Layout {...layoutProps}>
           <ApolloProvider client={apolloClient}>
-            <Component {...pageProps} router={router} />
+            <AppProvider>
+              <Component {...pageProps} router={router} />
+            </AppProvider>
           </ApolloProvider>
         </Layout>
 

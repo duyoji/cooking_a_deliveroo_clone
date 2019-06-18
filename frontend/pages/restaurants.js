@@ -1,5 +1,7 @@
 import gql from "graphql-tag";
 import { Query } from 'react-apollo'
+import { withContext } from "../components/Context/AppProvider";
+// import Cart from "../components/Cart/Cart";
 
 import {
   Button,
@@ -34,6 +36,11 @@ const GET_RESTAURANT_DISHES = gql`
 
 
 const Restaurants = (props) => {
+
+  const addItem = (item) => {
+    props.context.addItem(item);
+  };
+
   return (
     <Query
       query={GET_RESTAURANT_DISHES}
@@ -67,7 +74,11 @@ const Restaurants = (props) => {
                         <CardText>{res.description}</CardText>
                       </CardBody>
                       <div className="card-footer">
-                        <Button outline color="primary">
+                        <Button
+                          onClick={ addItem.bind(null, res) }
+                          outline
+                          color="primary"
+                        >
                           + Add To Cart
                         </Button>
 
@@ -96,6 +107,12 @@ const Restaurants = (props) => {
                   ))}
                 </div>
               </Col>
+              <Col xs="3" style={{ padding: 0 }}>
+                <div>
+                  TODO: カートコンポーネント
+                  {/* <Cart isAuthenticated={true} /> */}
+                </div>
+              </Col>
             </Row>
           </>
         );
@@ -106,4 +123,4 @@ const Restaurants = (props) => {
 
 Restaurants.displayName = 'pages/restaurants';
 
-export default Restaurants;
+export default withContext(Restaurants);
