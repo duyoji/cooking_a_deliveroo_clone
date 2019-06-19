@@ -2,3 +2,4 @@ node_modules
 .next
 db/
 .DS_Store
+next.config.js
