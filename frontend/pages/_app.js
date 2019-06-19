@@ -36,10 +36,10 @@ class MyApp extends App {
 
     return (
       <Container>
-        <Layout {...layoutProps}>
+        <Layout {...layoutProps} {...pageProps} router={router}>
           <ApolloProvider client={apolloClient}>
             <AppProvider>
-              <Component {...pageProps} router={router} />
+              <Component {...layoutProps} {...pageProps} router={router} />
             </AppProvider>
           </ApolloProvider>
         </Layout>

@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 import { Query } from 'react-apollo'
 import { withContext } from "../components/Context/AppProvider";
-// import Cart from "../components/Cart/Cart";
+import Cart from "../components/Cart/Cart";
 
 import {
   Button,
@@ -36,6 +36,7 @@ const GET_RESTAURANT_DISHES = gql`
 
 
 const Restaurants = (props) => {
+  const { isAuthenticated } = props;
 
   const addItem = (item) => {
     props.context.addItem(item);
@@ -50,7 +51,7 @@ const Restaurants = (props) => {
         if (loading) return 'Loading...';
         if (error) return `Error! ${error.message}`;
         const restaurant = data.restaurant;
-        // console.log(data, '@@@@@@@@@@data');
+
         if ( !restaurant ) return (<h1>Not Found</h1>);
 
         return (
@@ -109,8 +110,10 @@ const Restaurants = (props) => {
               </Col>
               <Col xs="3" style={{ padding: 0 }}>
                 <div>
-                  TODO: カートコンポーネント
-                  {/* <Cart isAuthenticated={true} /> */}
+                <Cart
+                  isAuthenticated={isAuthenticated}
+                  router={props.router}
+                />
                 </div>
               </Col>
             </Row>

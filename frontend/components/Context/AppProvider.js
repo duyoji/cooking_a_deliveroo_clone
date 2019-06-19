@@ -3,25 +3,24 @@ import Cookies from "js-cookie";
 /* First we will make a new context */
 const AppContext = React.createContext();
 
+const COOKIE_KEY = 'cart';
+
 /* Then create a provider Component */
 class AppProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       items: [],
-      total: null
+      total: 0
     };
   }
   componentDidMount() {
-    const cart = Cookies.getJSON("cart");
-    //if items in cart, set items and total from cookie
-    console.log(cart, '@@@@@@@@@cart componentDidMount');
-    let total;
+    const cart = Cookies.getJSON( COOKIE_KEY );
+    let total = 0;
     if (cart) {
       cart.forEach(item => {
-        total = item.price * item.quantity;
+        total += item.price * item.quantity;
       });
-      console.log(total, '@@@@@@@@@total');
       this.setState({ items: cart, total: total });
     }
   }
@@ -37,7 +36,7 @@ class AppProvider extends React.Component {
           items: [...this.state.items, item],
           total: this.state.total + item.price
         },
-        () => Cookies.set("cart", this.state.items)
+        () => Cookies.set(COOKIE_KEY, this.state.items)
       );
     } else {
       this.setState(
@@ -50,15 +49,13 @@ class AppProvider extends React.Component {
           ),
           total: this.state.total + item.price
         },
-        () => Cookies.set("cart", this.state.items)
+        () => Cookies.set(COOKIE_KEY, this.state.items)
       );
     }
   };
   removeItem = item => {
     let { items } = this.state;
-    //check for item already in cart
-    //if not in cart, add item if item is found increase quanity ++
-    const newItem = items.find(i => i._id === item._id);
+    const newItem = items.find(i => i.id === item.id);
     if (newItem.quantity > 1) {
       this.setState(
         {
@@ -70,7 +67,7 @@ class AppProvider extends React.Component {
           ),
           total: this.state.total - item.price
         },
-        () => Cookies.set("cart", this.state.items)
+        () => Cookies.set(COOKIE_KEY, this.state.items)
       );
     } else {
       const items = [...this.state.items];
@@ -79,7 +76,7 @@ class AppProvider extends React.Component {
       items.splice(index, 1);
       this.setState(
         { items, total: this.state.total - item.price },
-        () => Cookies.set("cart", this.state.items)
+        () => Cookies.set(COOKIE_KEY, this.state.items)
       );
     }
   };
